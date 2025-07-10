@@ -13,10 +13,13 @@
                                 (* (image-height cat1) 1.5)))
 
 (define Y-AXIS (/ (image-height BACKGROUND) 2))
+(define BG-WIDTH 20)
 ; VCat -> Image
 ; render a VCat on an empty background image.
 (define (render vcat)
-  (place-image cat1 (VCat-x vcat) Y-AXIS BACKGROUND))
+  (beside
+   (rectangle BG-WIDTH (VCat-happiness vcat) "solid" "red")
+   (place-image cat1 (VCat-x vcat) Y-AXIS BACKGROUND)))
 
 ; VCat -> VCat
 ; VCat moves 3 pixels right, 
