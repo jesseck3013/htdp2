@@ -3,3 +3,7 @@
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname Exercise94) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "dir.rkt" "teachpack" "htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "dir.rkt" "teachpack" "htdp")) #f)))
 
 
+; These three instances generalize three states of the game
+; 1. no missile
+; 2. tank fired a missile
+; 3. the missile hit the ufo
