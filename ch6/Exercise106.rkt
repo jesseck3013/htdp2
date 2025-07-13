@@ -12,6 +12,16 @@
 
 ; VCham -> Image
 ; render a VCham on an empty background image.
+(check-expect (render-cham (make-VCham 10 50 "red"))
+              (beside
+               (rectangle BG-WIDTH 50 "solid" "red")
+               (place-image
+                (overlay cham 
+                         (rectangle (image-width cham)
+                                    (image-height cham)
+                                    "solid"
+                                    "red"))
+                10 Y-AXIS BACKGROUND)))
 (define (render-cham vCham)
   (beside
    (rectangle BG-WIDTH (VCham-happiness vCham) "solid" "red")
@@ -37,6 +47,10 @@
                (make-VCham 10 100 "red"))
               (make-VCham 13 99.9 "red"))
 
+(check-expect (should-stop-cham (make-VCham 10 0 "red"))
+              #true)
+(check-expect (should-stop-cham (make-VCham 10 50 "red"))
+              #false)
 (define (should-stop-cham vCham)
   (= (VCham-happiness vCham) 0))
 
@@ -148,14 +162,43 @@
     [(VCat? animal) (render-cat  animal)]
     [(VCham? animal) (render-cham animal)]))
 
+(check-expect (render (make-VCham 10 50 "red"))
+              (beside
+               (rectangle BG-WIDTH 50 "solid" "red")
+               (place-image
+                (overlay cham 
+                         (rectangle (image-width cham)
+                                    (image-height cham)
+                                    "solid"
+                                    "red"))
+                10 Y-AXIS BACKGROUND)))
+
 ; VAnimal -> VAnimal
 (define (tick-handler animal)
   (cond
     [(VCat? animal) (clock-tick-handler-cat animal)]
     [(VCham? animal) (clock-tick-handler-cham animal)]))
 
+(check-expect (tick-handler
+               (make-VCham 10 100 "red"))
+              (make-VCham 13 99.9 "red"))
+
+(check-expect (tick-handler (make-VCat 10 100))
+              (make-VCat 13 99.9))
+
 ; VAnimal String -> VAnimal
 (define (key-handler animal ke)
     (cond
     [(VCat? animal) (key-handler-cat animal ke)]
     [(VCham? animal) (key-handler-cham animal ke)]))
+
+(check-expect
+ (key-handler (make-VCham 10 10 "red") "b")
+ (make-VCham 10 10 "blue"))
+
+(check-expect
+ (key-handler (make-VCat 10 9) "up")
+ (make-VCat 10 12))
+(check-expect
+ (key-handler (make-VCat 10 10) "down")
+ (make-VCat 10 8))
