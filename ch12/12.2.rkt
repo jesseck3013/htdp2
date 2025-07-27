@@ -7,3 +7,32 @@
 ; LTracks
 (define itunes-tracks
   (read-itunes-as-tracks ITUNES-LOCATION))
+
+; the 2htdp/itunes library documentation, part 2: 
+ 
+; An LLists is one of:
+; – '()
+; – (cons LAssoc LLists)
+ 
+; An LAssoc is one of: 
+; – '()
+; – (cons Association LAssoc)
+; 
+; An Association is a list of two items: 
+;   (cons String (cons BSDN '()))
+ 
+; A BSDN is one of: 
+; – Boolean
+; – Number
+; – String
+; – Date
+ 
+; String -> LLists
+; creates a list of lists representation for all tracks in 
+; file-name, which must be an XML export from iTunes 
+;; (define (read-itunes-as-lists file-name)
+;;   ...)
+
+; LLists
+(define list-tracks
+  (read-itunes-as-lists ITUNES-LOCATION))
