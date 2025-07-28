@@ -23,21 +23,13 @@
 
 (define segment1 (make-segment (make-posn 10 10) "down"))
 
-; get the physical representation
-(check-expect (segment-pos-scale segment1) (make-posn
-                                      (* SIZE 10)
-                                      (* SIZE 10)))
-(define (segment-pos-scale seg)
-  (make-posn (* SIZE (posn-x (segment-pos seg)))
-             (* SIZE (posn-y (segment-pos seg)))))
-               
 (define worm1 (list  segment1))
 ; worm is one of:
 ; (cons segment '())
 ; (cons segment worm)
 
 ; Size of the appearances of the game (e.g background, worm, food size)
-(define SIZE 1)
+(define SIZE 3)
 (define WIDTH (* 200 SIZE))
 (define HEIGHT (* 200 SIZE))
 (define SEGMENT-RADIUS (* 5 SIZE))
@@ -46,18 +38,18 @@
 
 ; segment -> Image
 ; put a segment on img
-(check-expect (render-segment segment1 BG) (place-image SEGMENT-IMG (* 10 SIZE) (* 10 SIZE) BG))
+(check-expect (render-segment segment1 BG) (place-image SEGMENT-IMG 10 10 BG))
 (define (render-segment seg img)
   (place-image SEGMENT-IMG
-               (posn-x (segment-pos-scale seg))
-               (posn-y (segment-pos-scale seg))
+               (posn-x (segment-pos seg))
+               (posn-y (segment-pos seg))
                img))
 
 ; worm -> Image
 ; put a worm on BG
 (check-expect (render worm1)
               (place-image SEGMENT-IMG
-                           (* 10 SIZE) (* 10 SIZE) BG))
+                           10 10 BG))
 (define (render w)
   (cond
     [(empty? (rest w)) (render-segment (first w) BG)]
