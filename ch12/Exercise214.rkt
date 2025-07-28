@@ -19,7 +19,8 @@
  
 (define (alternative-words s)
   (in-dictionary
-    (words->strings (arrangements (string->word s)))))
+   (create-set 
+    (words->strings (arrangements (string->word s))))))
  
 ; String -> Word
 ; converts s to the chosen word representation
@@ -165,5 +166,23 @@
      (cons (word->string (first low))
            (words->strings (rest low)))]))
 
-(alternative-words "rat")
+; List-of-strings -> List-of-strings
+; Create a list of string that only contains each album once
+(check-expect (create-set
+               (list "album1"
+                    "album1"
+                    "album1"))
+              (list "album1"))
+(check-expect (create-set '()) '())
+(define (create-set los)
+  (cond
+    [(empty? los) '()]
+    [(member?
+      (first los) (rest los))
+     (create-set (rest los))]
+    [else (cons (first los) (create-set (rest los)))]))
+
+;(alternative-words "rat")
+;(alternative-words "tea")
+;(alternative-words "bubble")
 
