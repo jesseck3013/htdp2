@@ -11,3 +11,29 @@
 '(("a" 1)
   ("b" 2)
   ("d" 4))
+
+(define x 42)
+
+'(40 41 x 43 44)
+
+'(1 (+ 1 1) 3)
+
+`(1 2 3)
+`("a" "b" "c")
+`(#true "hello world" 42)
+
+`(40 41 ,x 43 44)
+`(40 41 ,(+ 1 1) 43 44)
+
+; String String -> ... deeply nested list ...
+; produces a web page with given author and title
+(define (my-first-web-page author title)
+  `(html
+     (head
+       (title ,title)
+       (meta ((http-equiv "content-type")
+              (content "text-html"))))
+     (body
+       (h1 ,title)
+       (p "I, " ,author ", made this page."))))
+
