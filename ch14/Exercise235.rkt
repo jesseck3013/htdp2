@@ -1,0 +1,35 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname |14.1|) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "itunes.rkt" "teachpack" "2htdp") (lib "web-io.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "itunes.rkt" "teachpack" "2htdp") (lib "web-io.rkt" "teachpack" "2htdp")) #f)))
+
+; String Los -> Boolean
+; determines whether l contains the string s
+(define (contains? s l)
+  (cond
+    [(empty? l) #false]
+    [else (or (string=? (first l) s)
+              (contains? s (rest l)))]))
+
+; Los -> Boolean
+(check-expect
+ (contains-atom? (list "atom")) #true)
+(check-expect
+ (contains-atom? (list "apple")) #false)
+(define (contains-atom? los)
+  (contains? "atom" los))
+
+; Los -> Boolean
+(check-expect
+ (contains-basic? (list "basic")) #true)
+(check-expect
+ (contains-basic? (list "apple")) #false)
+(define (contains-basic? los)
+  (contains? "basic" los))
+
+; Los -> Boolean
+(check-expect
+ (contains-cat? (list "cat")) #true)
+(check-expect
+ (contains-cat? (list "apple")) #false)
+(define (contains-cat? los)
+  (contains? "cat" los))
