@@ -19,14 +19,14 @@
 (make-layer (make-layer 10))
 
 ; Abstraction:
-; An LItem is one of:
+; An [Layer-of Item ]is one of:
 ; - Item
 ; - (make-layer LItem)
 
-; An LStr is an an LItem where Item is String:
+; An [Layer-of String] is an an LItem where Item is String:
 ; - String
 ; - (make-layer LStr)
 
-; An LNum is an an LItem where Item is Number:
+; An [Layer-of Number] is an an LItem where Item is Number:
 ; - Number
 ; - (make-layer LNum)

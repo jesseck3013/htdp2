@@ -11,6 +11,6 @@
 ; - (cons Boolean '())
 ; - (cons Boolean NEList-of-Booleans)
 
-; An NEList-of is one of:
+; An [NEList-of ITEM] is one of:
 ; (cons ITEM '())
 ; (cons ITEM NEList-of)
