@@ -18,6 +18,10 @@
 ; the text to the left of the cursor and s to the
 ; text on the right
 
+; [List-of 1String] -> Number
+(define (text-width s)
+  (image-width (editor-text s)))
+
 ; [X] X [List-of X] -> [List-of X]
 (define (add-to-last x lox)
   (cond
@@ -42,10 +46,11 @@
              )
        (if (>=
             x
-            (image-width (editor-text one-more-on-pre)))
+            (text-width one-more-on-pre))
             (make-editor one-more-on-pre current-post)
-            (make-editor (rest one-more-on-pre) (cons (first one-more-on-pre)
-                                                      current-post))
+            (make-editor (rest one-more-on-pre)
+                         (cons (first one-more-on-pre)
+                               current-post))
             ))]))
 
 (check-expect (split-structural
