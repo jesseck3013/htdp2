@@ -29,16 +29,16 @@
    (not (is-λ? l))))
 
 ; λ-def is a structure:
-; (make-struct (List Symbol) Lam)
+; (make-struct Symbol Lam)
 (define-struct λ-def [para body])
 
 ; app is a structure:
 ; (make-struct Lam Lam)
 (define-struct app [fun arg])
 
-(define ex1 (make-λ-def (list 'x) 'x))
-(define ex2 (make-λ-def (list 'x) 'y))
-(define ex3 (make-λ-def (list 'y) (make-λ-def (list 'x) 'y)))
+(define ex1 (make-λ-def 'x 'x))
+(define ex2 (make-λ-def 'x 'y))
+(define ex3 (make-λ-def 'y (make-λ-def (list 'x) 'y)))
 (define ex4 (make-app
-             (make-λ-def (list 'x) (make-app 'x 'x))
-             (make-λ-def (list 'x) (make-app 'x 'x))))
+             (make-λ-def 'x (make-app 'x 'x))
+             (make-λ-def 'x (make-app 'x 'x))))

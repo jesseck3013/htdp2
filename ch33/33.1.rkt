@@ -75,3 +75,37 @@
 (check-expect (declareds ex3) '(y x))
 (check-expect (declareds ex4) '(x x))
 
+
+; Lam -> Lam 
+; replaces all symbols s in le with '*undeclared
+; if they do not occur within the body of a λ 
+; expression whose parameter is s
+ 
+(check-expect (undeclareds ex1) ex1)
+(check-expect (undeclareds ex2) '(λ (x) *undeclared))
+(check-expect (undeclareds ex3) ex3)
+(check-expect (undeclareds ex4) ex4)
+ 
+; Lam -> Lam 
+(define (undeclareds le0)
+  (local (; Lam [List-of Symbol] -> Lam
+          ; accumulator declareds is a list of all λ 
+          ; parameters on the path from le0 to le
+          (define (undeclareds/a le declareds)
+            (cond
+              [(is-var? le)
+               (if (member? le declareds) le '*undeclared)]
+              [(is-λ? le)
+               (local ((define para (λ-para le))
+                       (define body (λ-body le))
+                       (define newd (cons para declareds)))
+                 (list 'λ (list para)
+                   (undeclareds/a body newd)))]
+              [(is-app? le)
+               (local ((define fun (app-fun le))
+                       (define arg (app-arg le)))
+               (list (undeclareds/a fun declareds)
+                     (undeclareds/a arg declareds)))])))
+    (undeclareds/a le0 '())))
+
+
