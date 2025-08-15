@@ -24,21 +24,28 @@
 
 ; [List-of 1String] -> [List-of [List-of 1String]]
 (define (prefixes s)
-  (cond
-    [(empty? s) '()]
-    [else
-     (add-prefix
-      (first s)
-      (prefixes (rest s)))]))
+  (reverse
+   (map (lambda (outter)
+         (foldr (lambda (inner rst)
+                  (if (string=? outter inner)
+                      (list inner)
+                      (cons inner rst))) '() s)) s)))
 
-; 1String [List-of [List-of String]] -> [List-of [List-of String]]
-;; (check-expect (insert "a" (list (list "b")))
-;;                 (list
-;;                  (list "a" "b")
-;;                  (list "a")))
-;; (define (insert s los)
-;;   (cond
-;;     [(empty? los) (cons (list s) '())]
-;;     [else (cons
-;;            (cons s (first los))
-;;            (insert s (rest los)))]))
+; List-of-1Strings -> List-of-List-of-1Strings
+(check-expect (suffixes '()) '())
+(check-expect (suffixes (list "a")) (list (list "a")))
+(check-expect (suffixes (list "a" "b"))
+              (list (list "a" "b")
+                    (list "b")))
+(check-expect (suffixes (list "a" "b" "c"))
+              (list (list "a" "b" "c")
+                    (list "b" "c")
+                    (list "c")))
+
+(define (suffixes s)
+   (map (lambda (outter)
+          (reverse
+           (foldl (lambda (inner rst)
+                  (if (string=? outter inner)
+                      (list inner)
+                      (cons inner rst))) '() s))) s))
